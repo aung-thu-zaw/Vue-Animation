@@ -1,7 +1,9 @@
 <script setup>
 import gsap from "gsap";
-import { onMounted, ref } from "vue";
+import {  onMounted,  ref, watch } from "vue";
 
+const number = ref(0);
+const tweenedNumber = ref(0);
 const cards = ref([
   { id: 1 },
   { id: 2 },
@@ -39,7 +41,24 @@ onMounted(() => {
       // from: "edges",
     },
   });
+
+  setInterval(randomNumber, 1300);
 });
+
+const randomNumber = () => {
+  number.value = Math.floor(Math.random() * (800 - 0));
+};
+
+watch(
+  () => number.value,
+  (currentValue, previousValue) => {
+    gsap.to(tweenedNumber, {
+      duration: 1,
+      ease: "circ.out",
+      value: currentValue,
+    });
+  }
+);
 </script>
 
 <template>
@@ -71,6 +90,15 @@ onMounted(() => {
         <div v-for="card in cards" :key="card.id" class="card"></div>
       </div>
     </div>
+
+    <div class="space-y-3">
+      <h1 class="font-bold text-slate-600 text-md text-center w-full">
+        Dynamic Number Bar Animation
+      </h1>
+      <div :style="{ width: tweenedNumber + 'px' }" class="bar">
+        <span class="font-semibold">{{ tweenedNumber.toFixed(0) }}</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -81,5 +109,14 @@ onMounted(() => {
   width: 8rem;
   height: 8rem;
   background: rgb(175, 198, 3);
+}
+
+.bar {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: rgb(3, 137, 134);
 }
 </style>
