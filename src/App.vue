@@ -27,6 +27,15 @@
     >
       List
     </router-link>
+
+    <span class="text-slate-500 font-bold">|</span>
+
+    <router-link
+      :to="{ name: 'history' }"
+      class="text-slate-700 font-bold text-lg"
+    >
+      History
+    </router-link>
   </nav>
 
   <div class="container mx-auto p-10">
