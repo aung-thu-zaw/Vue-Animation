@@ -1,6 +1,6 @@
 <script setup>
 import gsap from "gsap";
-import {  onMounted,  ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 const number = ref(0);
 const tweenedNumber = ref(0);
@@ -29,6 +29,14 @@ const enter = (el, done) => {
   });
 };
 
+const gsapTimelineSequence = () => {
+  const timeline = gsap.timeline({ repeat: -1, repeatDelay: 1 });
+
+  timeline.to(".first", { x: 1000, duration: 2, ease: "expo.out" });
+  timeline.to(".second", { x: 1000, duration: 2, ease: "expo.out" }, "<0.5");
+  timeline.to(".third", { x: 1000, duration: 2, ease: "expo.out" });
+};
+
 onMounted(() => {
   gsap.from(".card", {
     duration: 0.5,
@@ -43,6 +51,8 @@ onMounted(() => {
   });
 
   setInterval(randomNumber, 1300);
+
+  gsapTimelineSequence();
 });
 
 const randomNumber = () => {
@@ -99,6 +109,29 @@ watch(
         <span class="font-semibold">{{ tweenedNumber.toFixed(0) }}</span>
       </div>
     </div>
+
+    <div class="space-y-3">
+      <h1 class="font-bold text-slate-600 text-md text-center w-full">
+        Gsap Timeline
+      </h1>
+      <div>
+        <img
+          class="runner first"
+          src="https://media.istockphoto.com/id/1167084433/photo/young-man-in-sportswear-running.jpg?s=612x612&w=0&k=20&c=DbWPp6FjB_XU0bXIWge0qNHLRUnBQXNeBSrFTMI4G7Q="
+          alt="runner"
+        />
+        <img
+          class="runner second"
+          src="https://media.istockphoto.com/id/1167084433/photo/young-man-in-sportswear-running.jpg?s=612x612&w=0&k=20&c=DbWPp6FjB_XU0bXIWge0qNHLRUnBQXNeBSrFTMI4G7Q="
+          alt="runner"
+        />
+        <img
+          class="runner third"
+          src="https://media.istockphoto.com/id/1167084433/photo/young-man-in-sportswear-running.jpg?s=612x612&w=0&k=20&c=DbWPp6FjB_XU0bXIWge0qNHLRUnBQXNeBSrFTMI4G7Q="
+          alt="runner"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -118,5 +151,13 @@ watch(
   justify-content: center;
   color: white;
   background-color: rgb(3, 137, 134);
+}
+
+.runner {
+  display: block;
+  height: 5em;
+  width: 5em;
+  margin-top: 1.5em;
+  object-fit: cover;
 }
 </style>
